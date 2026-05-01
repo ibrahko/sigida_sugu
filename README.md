@@ -1,4 +1,4 @@
-# Sigida Sugu Backend Bootstrap
+# Sigida Sugu Backend 
 
 Backend Django modulaire pour une marketplace généraliste.
 
