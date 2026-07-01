@@ -1,4 +1,4 @@
-import { Banknote, CreditCard, Link2, MessageSquare, Smartphone } from 'lucide-react'
+import { Banknote, CreditCard, MessageSquare, Smartphone } from 'lucide-react'
 import { cn } from '../../lib/cn'
 import { Input } from '../ui/input'
 

@@ -16,6 +16,7 @@ import { fetchAddresses, createAddress } from '../features/accounts/api'
 import { fetchCart } from '../features/cart/api'
 import { fetchDeliveryZones } from '../features/delivery/api'
 import { createOrder } from '../features/orders/api'
+import type { Order } from '../types/orders'
 import { initializeIntouchPayment } from '../features/payments/api'
 
 type InlineAddress = {
@@ -38,7 +39,7 @@ export function CheckoutPage() {
     data: { operator: '', phone: '' },
   })
   const [notes, setNotes] = useState('')
-  const [orderResult, setOrderResult] = useState<OrderResponse | null>(null)
+  const [orderResult, setOrderResult] = useState<Order | null>(null)
   const [sandboxTx, setSandboxTx] = useState<{ ref: string; amount: string } | null>(null)
 
   const { data: addresses, isLoading: addrLoading } = useQuery({
