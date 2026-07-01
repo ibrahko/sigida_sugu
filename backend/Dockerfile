@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Requirements en premier pour bénéficier du cache Docker
-COPY requirements/prod.txt requirements/prod.txt
+COPY requirements/ requirements/
 RUN pip install -r requirements/prod.txt
 
 # Code source
