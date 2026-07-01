@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Plus, MapPin, Trash2, Edit3 } from 'lucide-react'
-import { api } from '../services/api'
+import {
+  fetchAddresses,
+  createAddress,
+  updateAddress,
+  deleteAddress,
+} from '../features/accounts/api'
+import type { Address, AddressFormData } from '../types/accounts'
 import { AccountPageHeader } from '../components/account/AccountLayout'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
@@ -11,42 +17,7 @@ import { Skeleton } from '../components/ui/skeleton'
 import { EmptyState } from '../components/ui/empty-state'
 import { Alert } from '../components/ui/alert'
 
-export type Address = {
-  id: number
-  label: string
-  full_name: string
-  phone: string
-  line1: string
-  line2?: string
-  city: string
-  region: string
-  country: string
-  landmark?: string
-  is_default: boolean
-}
-
-type PaginatedResponse<T> = {
-    count: number
-    next: string | null
-    previous: string | null
-    results: T[]
-  }
-
-  async function fetchAddresses() {
-    const { data } = await api.get<Address[] | PaginatedResponse<Address>>(
-      '/accounts/addresses/'
-    )
-  
-    if (Array.isArray(data)) {
-      return data
-    }
-  
-    return data.results ?? []
-  }
-
-type AddressFormState = Omit<Address, 'id' | 'is_default'> & {
-  is_default?: boolean
-}
+type AddressFormState = AddressFormData
 
 const emptyForm: AddressFormState = {
   label: '',
@@ -125,35 +96,20 @@ export function AccountAddressesPage() {
   }
 
   const createMutation = useMutation({
-    mutationFn: async () => {
-      const payload = {
-        ...form,
-        is_default: !!form.is_default,
-      }
-      const { data } = await api.post<Address>('/accounts/addresses/', payload)
-      return data
-    },
+    mutationFn: () => createAddress({ ...form, is_default: !!form.is_default }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['account-addresses'] })
       closeForm()
     },
     onError: () => {
-      setGlobalError('Impossible d’enregistrer cette adresse. Réessaie dans un instant.')
+      setGlobalError("Impossible d'enregistrer cette adresse. Réessaie dans un instant.")
     },
   })
 
   const updateMutation = useMutation({
-    mutationFn: async () => {
-      if (!editingId) return null
-      const payload = {
-        ...form,
-        is_default: !!form.is_default,
-      }
-      const { data } = await api.put<Address>(
-        `/accounts/addresses/${editingId}/`,
-        payload,
-      )
-      return data
+    mutationFn: () => {
+      if (!editingId) return Promise.resolve(null)
+      return updateAddress(editingId, { ...form, is_default: !!form.is_default })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['account-addresses'] })
@@ -165,9 +121,7 @@ export function AccountAddressesPage() {
   })
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: number) => {
-      await api.delete(`/accounts/addresses/${id}/`)
-    },
+    mutationFn: (id: number) => deleteAddress(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['account-addresses'] })
     },
@@ -302,7 +256,7 @@ export function AccountAddressesPage() {
             >
               <Input
                 name="label"
-                label="Nom de l’adresse"
+                label="Nom de l'adresse"
                 placeholder="Maison, Bureau..."
                 value={form.label}
                 onChange={(e) =>
@@ -346,7 +300,7 @@ export function AccountAddressesPage() {
 
               <Input
                 name="line2"
-                label="Complément d’adresse"
+                label="Complément d'adresse"
                 placeholder="Appartement, étage, etc. (optionnel)"
                 value={form.line2}
                 onChange={(e) =>

@@ -7,9 +7,9 @@ import type {
   Brand,
 } from '../../types/catalog'
 
-export async function fetchFeaturedProducts() {
+export async function fetchFeaturedProducts(page = 1) {
   const { data } = await api.get<PaginatedResponse<ProductListItem>>(
-    '/catalog/products/?featured=true'
+    `/catalog/products/?featured=true&page=${page}&page_size=10`
   )
   return data
 }

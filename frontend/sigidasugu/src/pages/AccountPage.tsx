@@ -1,52 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { Mail, MapPin, Phone, User } from 'lucide-react'
-import { api } from '../services/api'
+import { fetchMe, fetchAddresses } from '../features/accounts/api'
 import { AccountPageHeader } from '../components/account/AccountLayout'
 import { Button } from '../components/ui/button'
 import { Skeleton } from '../components/ui/skeleton'
 import { EmptyState } from '../components/ui/empty-state'
-
-type Me = {
-  id: number
-  username: string
-  first_name: string
-  last_name: string
-  email: string
-  phone?: string
-}
-
-type Address = {
-  id: number
-  label: string
-  full_name: string
-  phone: string
-  line1: string
-  line2?: string
-  city: string
-  region: string
-  country: string
-  landmark?: string
-  is_default: boolean
-}
-
-type PaginatedResponse<T> = {
-  count: number
-  results: T[]
-}
-
-async function fetchMe() {
-  const { data } = await api.get<Me>('/accounts/me/')
-  return data
-}
-
-async function fetchAddresses() {
-  const { data } = await api.get<Address[] | PaginatedResponse<Address>>(
-    '/accounts/addresses/',
-  )
-  if (Array.isArray(data)) return data
-  return data.results ?? []
-}
 
 function InfoRow({
   icon,

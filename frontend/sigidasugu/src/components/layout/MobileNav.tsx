@@ -11,7 +11,7 @@ const items = [
 
 export function MobileNav() {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--color-border)] bg-white/95 backdrop-blur-lg md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--color-border)] bg-white/97 backdrop-blur-lg md:hidden">
       <div className="mx-auto flex max-w-lg items-stretch justify-around px-2 pb-[env(safe-area-inset-bottom)]">
         {items.map(({ to, label, icon: Icon, end }) => (
           <NavLink
@@ -31,11 +31,16 @@ export function MobileNav() {
               <>
                 <span
                   className={cn(
-                    'grid h-9 w-9 place-items-center rounded-2xl transition',
-                    isActive && 'bg-[var(--color-brand)]/10',
+                    'grid h-9 w-9 place-items-center rounded-[var(--radius-sm)] transition',
+                    isActive && 'bg-[var(--color-brand-soft)]',
                   )}
                 >
-                  <Icon className={cn('h-5 w-5', isActive && 'stroke-[2.5]')} />
+                  <Icon
+                    className={cn(
+                      'h-5 w-5 transition',
+                      isActive ? 'stroke-[2.5] text-[var(--color-brand)]' : '',
+                    )}
+                  />
                 </span>
                 {label}
               </>

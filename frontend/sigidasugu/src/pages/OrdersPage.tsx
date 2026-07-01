@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, useLocation } from 'react-router-dom'
-import { api } from '../services/api'
+import { fetchOrders } from '../features/orders/api'
 import { AccountPageHeader } from '../components/account/AccountLayout'
 import { orderStatusLabel } from '../components/account/AccountStatCard'
 import { PageHeader } from '../components/ui/page-header'
@@ -10,34 +10,6 @@ import { EmptyState } from '../components/ui/empty-state'
 import { Alert } from '../components/ui/alert'
 import { Button } from '../components/ui/button'
 import { formatPrice } from '../lib/format'
-
-type OrderItem = {
-  id: number
-  quantity: number
-  unit_price: string
-  total_price: string
-  product_name: string
-}
-
-type Order = {
-  id: number
-  number: string
-  status: string
-  total: string
-  currency: string
-  created_at: string
-  items: OrderItem[]
-}
-
-type OrdersResponse = {
-  count: number
-  results: Order[]
-}
-
-async function fetchOrders() {
-  const { data } = await api.get<OrdersResponse>('/orders/')
-  return data
-}
 
 function getStatusVariant(status: string): 'info' | 'success' | 'warning' {
   if (status === 'delivered' || status === 'paid') return 'success'
@@ -117,7 +89,10 @@ export function OrdersPage() {
             key={order.id}
             className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-white shadow-[var(--shadow-soft)]"
           >
-            <div className="flex flex-col gap-3 border-b border-[var(--color-border)] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+            <Link
+              to={`/compte/commandes/${order.id}`}
+              className="flex flex-col gap-3 border-b border-[var(--color-border)] px-5 py-4 transition hover:bg-[var(--color-bg-warm)] sm:flex-row sm:items-center sm:justify-between sm:px-6"
+            >
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <h2 className="font-semibold text-[var(--color-text)]">
@@ -134,7 +109,7 @@ export function OrdersPage() {
               <p className="text-xl font-bold text-[var(--color-brand)]">
                 {formatPrice(order.total, order.currency)}
               </p>
-            </div>
+            </Link>
 
             <div className="space-y-2 p-5 sm:p-6">
               {order.items?.slice(0, 3).map((item) => (

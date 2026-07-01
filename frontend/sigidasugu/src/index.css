@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  /* Primary — sage doux, pas de teal criard */
-  --color-brand: #4a6359;
-  --color-brand-dark: #3a4f47;
-  --color-brand-light: #6d857a;
-  --color-brand-soft: #eef2f0;
-  --color-brand-muted: #dce4e0;
+  /* Primary — vert forêt profond */
+  --color-brand: #1c3a2d;
+  --color-brand-dark: #0f2219;
+  --color-brand-light: #2a5240;
+  --color-brand-mid: #4a7a62;
+  --color-brand-soft: #eef4f0;
+  --color-brand-muted: #c8dcd2;
 
-  /* Accent — sable chaud, discret */
-  --color-accent: #a07850;
-  --color-accent-soft: #f5f0ea;
-  --color-accent-muted: #c9a882;
+  /* Accent — or chaud */
+  --color-accent: #d4a853;
+  --color-accent-dark: #b8902f;
+  --color-accent-soft: #f5e6c3;
+  --color-accent-muted: #e8c98a;
 
   /* Surfaces — neutres propres */
   --color-bg: #fafaf9;
@@ -25,9 +27,10 @@
   --color-muted: #8c8c88;
   --color-border: #e8e7e3;
 
-  /* Sections sombres (footer, hero optionnel) */
-  --color-ink: #2a2f2c;
-  --color-ink-soft: #3d4440;
+  /* Sections sombres (footer, hero) */
+  --color-ink: #0f2219;
+  --color-ink-mid: #1c3a2d;
+  --color-ink-soft: #2a5240;
 
   /* Sémantique */
   --color-success: #3d7a5c;
@@ -39,8 +42,13 @@
   --shadow-soft: 0 1px 3px rgba(28, 28, 26, 0.04), 0 8px 24px rgba(28, 28, 26, 0.06);
   --shadow-card: 0 2px 8px rgba(28, 28, 26, 0.05), 0 12px 32px rgba(28, 28, 26, 0.07);
   --shadow-elevated: 0 4px 16px rgba(28, 28, 26, 0.08), 0 24px 48px rgba(28, 28, 26, 0.06);
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
+
+  /* Radius — cohérent et modéré */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
 
   /* Typographie */
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
@@ -64,18 +72,22 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
-/* Motif très léger — à utiliser avec parcimonie */
+/* Hero sombre */
+.hero-dark {
+  background: linear-gradient(135deg, #0f2219 0%, #1c3a2d 55%, #2a5240 100%);
+}
+
+/* Motif très léger — arrière-plan neutre */
 .pattern-kente {
   background-image:
-    radial-gradient(circle at 15% 80%, rgba(74, 99, 89, 0.04) 0%, transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(160, 120, 80, 0.04) 0%, transparent 40%);
+    radial-gradient(circle at 15% 80%, rgba(28, 58, 45, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(212, 168, 83, 0.05) 0%, transparent 40%);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 @keyframes fade-up {

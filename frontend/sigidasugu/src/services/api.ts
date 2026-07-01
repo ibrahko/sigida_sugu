@@ -1,7 +1,10 @@
 import axios from 'axios'
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000/api/v1'
+
 export const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/v1',
+  baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -9,11 +12,9 @@ export const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('access_token')
-    console.log("token", token)
-    if (token) {
-      ;(config.headers as any) = (config.headers || {})
-      ;(config.headers as any).Authorization = `Bearer ${token}`
-    }
-    return config
-  })
+  const token = localStorage.getItem('access_token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})

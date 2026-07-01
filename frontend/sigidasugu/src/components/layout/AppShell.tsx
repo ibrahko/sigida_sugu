@@ -30,12 +30,12 @@ export function AppShell() {
     <div className="flex min-h-screen flex-col pb-20 md:pb-0">
       <AnnouncementBar />
 
-      <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-white/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 lg:gap-6 lg:px-8 lg:py-4">
+      <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-white/95 backdrop-blur-xl shadow-[0_1px_0_0_var(--color-border)]">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 lg:gap-6 lg:px-8 lg:py-3.5">
           <div className="flex items-center gap-3">
             <button
               type="button"
-              className="grid h-10 w-10 place-items-center rounded-xl text-[var(--color-text)] md:hidden"
+              className="grid h-9 w-9 place-items-center rounded-[var(--radius-sm)] text-[var(--color-text)] hover:bg-[var(--color-bg-warm)] md:hidden"
               onClick={() => setMobileMenuOpen((v) => !v)}
               aria-label={mobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             >
@@ -46,7 +46,7 @@ export function AppShell() {
 
           <form
             onSubmit={handleSearch}
-            className="hidden flex-1 items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 py-2.5 md:flex lg:max-w-xl"
+            className="hidden flex-1 items-center gap-2.5 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 py-2.5 transition focus-within:border-[var(--color-brand-muted)] focus-within:ring-2 focus-within:ring-[var(--color-brand-soft)] md:flex lg:max-w-xl"
           >
             <Search className="h-4 w-4 shrink-0 text-[var(--color-muted)]" />
             <input
@@ -57,7 +57,7 @@ export function AppShell() {
             />
           </form>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-0.5 lg:flex">
             {navLinks.map(({ to, label, end }) => (
               <NavLink
                 key={to}
@@ -65,10 +65,10 @@ export function AppShell() {
                 end={end}
                 className={({ isActive }) =>
                   cn(
-                    'rounded-xl px-4 py-2 text-sm font-medium transition',
+                    'rounded-[var(--radius-sm)] px-3.5 py-2 text-sm font-medium transition',
                     isActive
-                      ? 'bg-[var(--color-brand)]/10 text-[var(--color-brand)]'
-                      : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-warm)]',
+                      ? 'bg-[var(--color-brand-soft)] text-[var(--color-brand)] font-semibold'
+                      : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-text)]',
                   )
                 }
               >
@@ -80,7 +80,7 @@ export function AppShell() {
           <div className="flex items-center gap-2">
             <Link
               to="/compte"
-              className="hidden h-10 w-10 place-items-center rounded-xl border border-[var(--color-border)] text-[var(--color-text-secondary)] transition hover:bg-[var(--color-bg-warm)] sm:grid"
+              className="hidden h-9 w-9 place-items-center rounded-[var(--radius-sm)] border border-[var(--color-border)] text-[var(--color-text-secondary)] transition hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-text)] sm:grid"
               aria-label="Mon compte"
             >
               <User className="h-4 w-4" />
@@ -88,7 +88,7 @@ export function AppShell() {
 
             <Link
               to="/panier"
-              className="inline-flex items-center gap-2 rounded-2xl bg-[var(--color-brand)] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-dark)]"
+              className="inline-flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--color-brand)] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-light)]"
             >
               <ShoppingCart className="h-4 w-4" />
               <span className="hidden sm:inline">Panier</span>
@@ -98,7 +98,7 @@ export function AppShell() {
 
         {mobileMenuOpen && (
           <div className="border-t border-[var(--color-border)] bg-white px-4 py-4 md:hidden">
-            <form onSubmit={handleSearch} className="mb-4 flex items-center gap-2 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 py-3">
+            <form onSubmit={handleSearch} className="mb-4 flex items-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 py-3">
               <Search className="h-4 w-4 text-[var(--color-muted)]" />
               <input
                 value={searchQuery}
@@ -116,9 +116,9 @@ export function AppShell() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={({ isActive }) =>
                     cn(
-                      'rounded-xl px-4 py-3 text-sm font-medium',
+                      'rounded-[var(--radius-sm)] px-4 py-3 text-sm font-medium',
                       isActive
-                        ? 'bg-[var(--color-brand)]/10 text-[var(--color-brand)]'
+                        ? 'bg-[var(--color-brand-soft)] text-[var(--color-brand)] font-semibold'
                         : 'text-[var(--color-text-secondary)]',
                     )
                   }

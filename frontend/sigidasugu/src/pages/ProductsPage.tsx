@@ -39,6 +39,7 @@ export function ProductsPage() {
     const params: Record<string, string> = {
       ordering: currentOrdering,
       page: String(currentPage),
+      page_size: '15',
     }
     if (currentCategory) params.category = currentCategory
     if (currentBrand) params.brand = currentBrand
@@ -349,8 +350,8 @@ export function ProductsPage() {
 
           {/* Grille produits */}
           {isLoading ? (
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-              {Array.from({ length: 8 }).map((_, i) => (
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {Array.from({ length: 15 }).map((_, i) => (
                 <ProductCardSkeleton key={i} />
               ))}
             </div>
@@ -362,7 +363,7 @@ export function ProductsPage() {
           ) : products?.results?.length ? (
             <>
               <div
-                className={`grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ${
+                className={`grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 ${
                   isFetching ? 'opacity-70 transition-opacity' : ''
                 }`}
               >
@@ -378,6 +379,7 @@ export function ProductsPage() {
               <CatalogPagination
                 count={products.count}
                 page={currentPage}
+                pageSize={15}
                 onPageChange={setPage}
               />
             </>

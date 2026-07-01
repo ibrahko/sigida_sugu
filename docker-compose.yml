@@ -1,0 +1,103 @@
+services:
+
+  # ── Base de données ──────────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sigida_sugu}
+      POSTGRES_USER: ${POSTGRES_USER:-sigida}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sigida}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sigida} -d ${POSTGRES_DB:-sigida_sugu}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis ────────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ── Django API ───────────────────────────────────────────────────────────────
+  web:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./backend/.env
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.dev
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - media_data:/app/media
+
+  # ── Celery Worker ────────────────────────────────────────────────────────────
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./backend/.env
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.dev
+    command: >
+      celery -A config.celery worker
+      --loglevel=info
+      --concurrency=2
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - media_data:/app/media
+
+  # ── Celery Beat ──────────────────────────────────────────────────────────────
+  beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./backend/.env
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.dev
+    command: celery -A config.celery beat --loglevel=info
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ── Frontend React (dev local seulement) ─────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend/sigidasugu
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8000/api/v1
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  redis_data:
+  media_data:

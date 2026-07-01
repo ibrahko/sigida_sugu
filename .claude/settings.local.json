@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/catalog/products/\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('count:', d.get\\('count'\\), '| results:', len\\(d.get\\('results',[]\\)\\)\\)\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/catalog/categories/\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(type\\(d\\).__name__, '| len:', len\\(d\\) if isinstance\\(d,list\\) else len\\(d.get\\('results',[]\\)\\)\\)\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/delivery/\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d\\)\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -X POST http://127.0.0.1:8000/api/v1/accounts/register/ -H \"Content-Type: application/json\" -d '{\"username\":\"test\",\"email\":\"test@test.com\",\"password\":\"test1234\",\"password2\":\"test1234\"}')",
+      "Bash(curl -s -X POST http://127.0.0.1:8000/api/v1/accounts/token/ -H \"Content-Type: application/json\" -d '{\"username\":\"test\",\"password\":\"test1234\"}')",
+      "Bash(DJANGO_SETTINGS_MODULE=config.settings.dev ./sugu_env/Scripts/python.exe manage.py show_urls)",
+      "Bash(curl -s -X POST http://127.0.0.1:8000/api/v1/accounts/login/ -H 'Content-Type: application/json' -d '{\"username\":\"test\",\"password\":\"test1234\"}')",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/catalog/products/?is_featured=true\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/catalog/products/?featured=true\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/api/v1/cart/me/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/api/v1/accounts/summary/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/api/v1/orders/)",
+      "Bash(DJANGO_SETTINGS_MODULE=config.settings.dev ./sugu_env/Scripts/python.exe -c ' *)",
+      "Bash(DJANGO_SETTINGS_MODULE=config.settings.dev ./sugu_env/Scripts/python.exe manage.py shell -c ' *)",
+      "Bash(npx tsc *)",
+      "Bash(curl -s \"http://localhost:5173/\")",
+      "Bash(curl -s -H 'Origin: http://localhost:5173' -H 'Access-Control-Request-Method: GET' -X OPTIONS http://127.0.0.1:8000/api/v1/catalog/products/ -I)",
+      "Bash(curl -sv \"http://127.0.0.1:8000/api/v1/catalog/products/?featured=true\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/catalog/products/3/\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/accounts/addresses/\" -H \"Authorization: Bearer invalidtoken\")",
+      "Bash(C:/Users/HP/Desktop/sigidasugu/sugu_env/Scripts/python.exe manage.py startapp notifications apps/notifications)"
+    ]
+  }
+}

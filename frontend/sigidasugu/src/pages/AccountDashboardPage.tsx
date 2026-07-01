@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { ArrowRight, MapPin, Package, ShoppingBag, Wallet } from 'lucide-react'
-import { api } from '../services/api'
+import { fetchAccountSummary, fetchAddresses } from '../features/accounts/api'
 import { AccountPageHeader } from '../components/account/AccountLayout'
 import {
   AccountStatCard,
@@ -12,31 +12,9 @@ import { Button } from '../components/ui/button'
 import { Skeleton } from '../components/ui/skeleton'
 import { formatPrice } from '../lib/format'
 
-type AccountSummary = {
-  orders_count: number
-  total_spent: string
-  last_order: {
-    id: number
-    number: string
-    status: string
-    total: string
-    currency: string
-    created_at: string
-  } | null
-}
-
-async function fetchAccountSummary() {
-  const { data } = await api.get<AccountSummary>('/accounts/summary/')
-  return data
-}
-
 async function fetchAddressCount() {
-  const { data } = await api.get<{ count?: number; results?: unknown[] } | unknown[]>(
-    '/accounts/addresses/',
-  )
-  if (Array.isArray(data)) return data.length
-  if (data && typeof data === 'object' && 'count' in data) return data.count ?? data.results?.length ?? 0
-  return 0
+  const addresses = await fetchAddresses()
+  return addresses.length
 }
 
 export function AccountDashboardPage() {
@@ -131,7 +109,7 @@ export function AccountDashboardPage() {
           {data?.last_order ? (
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-start gap-4">
-                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[var(--color-brand-soft)] text-[var(--color-brand)]">
+                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--radius-sm)] bg-[var(--color-brand-soft)] text-[var(--color-brand)]">
                   <Package className="h-5 w-5" />
                 </div>
                 <div>

@@ -27,21 +27,21 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4 lg:col-span-1">
             <Logo variant="light" />
-            <p className="max-w-xs text-sm leading-6 text-white/70">
+            <p className="max-w-xs text-sm leading-6 text-white/65">
               Marketplace généraliste pour Bamako. Courses du quotidien, high-tech et équipements —
               livraison locale et paiements adaptés au Mali.
             </p>
             <div className="flex gap-3">
               <a
                 href="#"
-                className="grid h-9 w-9 place-items-center rounded-xl bg-white/10 text-white/80 transition hover:bg-white/20"
+                className="grid h-9 w-9 place-items-center rounded-[var(--radius-sm)] bg-white/10 text-white/70 transition hover:bg-white/20 hover:text-white"
                 aria-label="Réseaux sociaux"
               >
                 <Share2 className="h-4 w-4" />
               </a>
               <a
                 href="#"
-                className="grid h-9 w-9 place-items-center rounded-xl bg-white/10 text-white/80 transition hover:bg-white/20"
+                className="grid h-9 w-9 place-items-center rounded-[var(--radius-sm)] bg-white/10 text-white/70 transition hover:bg-white/20 hover:text-white"
                 aria-label="Site web"
               >
                 <Globe className="h-4 w-4" />
@@ -50,13 +50,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--color-accent-muted)]">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[var(--color-accent)]">
               Boutique
             </h3>
             <ul className="space-y-2.5">
               {links.shop.map((link) => (
                 <li key={link.label}>
-                  <Link to={link.to} className="text-sm text-white/70 transition hover:text-white">
+                  <Link to={link.to} className="text-sm text-white/65 transition hover:text-white">
                     {link.label}
                   </Link>
                 </li>
@@ -65,13 +65,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--color-accent-muted)]">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[var(--color-accent)]">
               Mon compte
             </h3>
             <ul className="space-y-2.5">
               {links.account.map((link) => (
                 <li key={link.label}>
-                  <Link to={link.to} className="text-sm text-white/70 transition hover:text-white">
+                  <Link to={link.to} className="text-sm text-white/65 transition hover:text-white">
                     {link.label}
                   </Link>
                 </li>
@@ -80,20 +80,20 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--color-accent-muted)]">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[var(--color-accent)]">
               Contact
             </h3>
-            <ul className="space-y-3 text-sm text-white/70">
+            <ul className="space-y-3 text-sm text-white/65">
               <li className="flex items-start gap-2">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-brand-light)]" />
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-accent)]" />
                 Bamako, Mali
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 shrink-0 text-[var(--color-brand-light)]" />
+                <Phone className="h-4 w-4 shrink-0 text-[var(--color-accent)]" />
                 +223 XX XX XX XX
               </li>
               <li className="flex items-center gap-2">
-                <Mail className="h-4 w-4 shrink-0 text-[var(--color-brand-light)]" />
+                <Mail className="h-4 w-4 shrink-0 text-[var(--color-accent)]" />
                 contact@sigidasugu.ml
               </li>
             </ul>
@@ -101,14 +101,15 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
-          <p className="text-xs text-white/50">
+          <p className="text-xs text-white/40">
             © {new Date().getFullYear()} Sigida Sugu. Tous droits réservés.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 text-xs text-white/50">
-            <span className="rounded-full bg-white/10 px-3 py-1">Orange Money</span>
-            <span className="rounded-full bg-white/10 px-3 py-1">Moov Money</span>
-            <span className="rounded-full bg-white/10 px-3 py-1">InTouch</span>
-            <span className="rounded-full bg-white/10 px-3 py-1">Paiement à la livraison</span>
+          <div className="flex flex-wrap justify-center gap-2 text-[10px] font-semibold">
+            {['Orange Money', 'Moov Money', 'InTouch', 'Paiement livraison'].map((label) => (
+              <span key={label} className="rounded-full border border-white/15 bg-white/08 px-3 py-1 text-white/50">
+                {label}
+              </span>
+            ))}
           </div>
         </div>
       </div>

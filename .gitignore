@@ -1,0 +1,44 @@
+# ── Python / Django ───────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+
+# Environnements virtuels
+sugu_env/
+venv/
+.venv/
+env/
+
+# Django
+backend/.env
+backend/media/
+backend/staticfiles/
+backend/*.log
+
+# ── Node / React ──────────────────────────────────────────────────────────────
+frontend/sigidasugu/node_modules/
+frontend/sigidasugu/dist/
+frontend/sigidasugu/.env
+frontend/sigidasugu/.env.local
+
+# ── Tests / Cache ─────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+*.sqlite3
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
