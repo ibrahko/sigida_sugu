@@ -122,7 +122,7 @@ export function OrdersPage() {
                     <p className="text-[var(--color-muted)]">Quantité : {item.quantity}</p>
                   </div>
                   <p className="font-semibold text-[var(--color-text)]">
-                    {formatPrice(item.total_price)}
+                    {formatPrice(item.total_price ?? item.line_total)}
                   </p>
                 </div>
               ))}

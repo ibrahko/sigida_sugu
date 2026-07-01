@@ -67,8 +67,10 @@ export function OrderDetailPage() {
     queryKey: ['order', id],
     queryFn: () => fetchOrder(id!),
     enabled: !!id,
-    refetchInterval: (data) =>
-      data && ['pending', 'paid', 'preparing', 'shipped'].includes(data.status) ? 30000 : false,
+    refetchInterval: (query) => {
+      const d = (query as { state?: { data?: { status?: string } } }).state?.data
+      return d && ['pending', 'paid', 'preparing', 'shipped'].includes(d.status ?? '') ? 30000 : false
+    },
   })
 
   if (isLoading) {
