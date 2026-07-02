@@ -43,4 +43,13 @@ export interface AccountSummary {
 export interface AuthTokens {
   access: string
   refresh: string
+  user?: {
+    id: number
+    username: string
+    email: string
+    first_name: string
+    last_name: string
+    role: string
+    is_staff: boolean
+  }
 }

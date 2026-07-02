@@ -16,6 +16,9 @@ urlpatterns = [
     path("api/v1/payments/", include("apps.payments.urls")),
     path("api/v1/delivery/", include("apps.delivery.urls")),
 
+    # ── Setup bootstrap (premier admin) ──────────────────────────────────────
+    path("api/v1/setup/", __import__("apps.accounts.setup_views", fromlist=["SetupAdminView"]).SetupAdminView.as_view()),
+
     # ── Backoffice admin ──────────────────────────────────────────────────────
     path("api/v1/admin/catalog/", include("apps.catalog.admin_urls")),
     path("api/v1/admin/orders/", include("apps.orders.admin_urls")),

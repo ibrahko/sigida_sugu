@@ -20,7 +20,14 @@ export function LoginPage() {
       localStorage.setItem('refresh_token', tokens.refresh)
       return tokens
     },
-    onSuccess: () => navigate('/compte'),
+    onSuccess: (tokens) => {
+      const role = tokens.user?.role
+      if (role === 'admin' || role === 'staff') {
+        navigate('/admin')
+      } else {
+        navigate('/compte')
+      }
+    },
     onError: () =>
       setErrors({ global: 'Connexion impossible. Vérifie tes identifiants.' }),
   })

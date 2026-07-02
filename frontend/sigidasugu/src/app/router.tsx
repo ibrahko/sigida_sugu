@@ -23,6 +23,7 @@ import AdminCategoriesPage from '../pages/admin/AdminCategoriesPage'
 import AdminOrdersPage from '../pages/admin/AdminOrdersPage'
 import AdminUsersPage from '../pages/admin/AdminUsersPage'
 import AdminInviteUserPage from '../pages/admin/AdminInviteUserPage'
+import SetupPage from '../pages/SetupPage'
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,11 @@ export const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    // Page secrète de création du premier admin — URL connue du propriétaire uniquement
+    path: '/setup/:token',
+    element: <SetupPage />,
   },
   {
     path: '/admin',
