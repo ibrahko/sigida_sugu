@@ -15,6 +15,14 @@ import { AccountPage } from '../pages/AccountPage'
 import { AccountShell } from '../components/layout/AccountShell'
 import { AccountDashboardPage } from '../pages/AccountDashboardPage'
 import { AccountAddressesPage } from '../pages/AccountAddressesPage'
+import AdminLayout from '../layouts/AdminLayout'
+import AdminGuard from '../components/admin/AdminGuard'
+import AdminDashboard from '../pages/admin/AdminDashboard'
+import AdminProductsPage from '../pages/admin/AdminProductsPage'
+import AdminCategoriesPage from '../pages/admin/AdminCategoriesPage'
+import AdminOrdersPage from '../pages/admin/AdminOrdersPage'
+import AdminUsersPage from '../pages/admin/AdminUsersPage'
+import AdminInviteUserPage from '../pages/admin/AdminInviteUserPage'
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +51,22 @@ export const router = createBrowserRouter([
           { path: 'commandes/:id', element: <OrderDetailPage /> },
         ],
       },
+    ],
+  },
+  {
+    path: '/admin',
+    element: (
+      <AdminGuard>
+        <AdminLayout />
+      </AdminGuard>
+    ),
+    children: [
+      { index: true, element: <AdminDashboard /> },
+      { path: 'products', element: <AdminProductsPage /> },
+      { path: 'categories', element: <AdminCategoriesPage /> },
+      { path: 'orders', element: <AdminOrdersPage /> },
+      { path: 'users', element: <AdminUsersPage /> },
+      { path: 'users/invite', element: <AdminInviteUserPage /> },
     ],
   },
 ])

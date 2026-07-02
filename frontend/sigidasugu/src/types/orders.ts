@@ -23,6 +23,7 @@ export interface Order {
   notes?: string
   created_at: string
   updated_at?: string
+  user?: { id: number; email: string; first_name: string; last_name: string } | null
   items: OrderItem[]
   delivery_address?: {
     label: string

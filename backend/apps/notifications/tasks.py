@@ -38,6 +38,21 @@ def send_welcome_email(self, user_id: int) -> None:
 
 
 @shared_task(bind=True, max_retries=3, default_retry_delay=60)
+def send_invitation_email(self, user_id: int, plain_password: str) -> None:
+    from django.contrib.auth import get_user_model
+    from .emails import invitation_email
+    User = get_user_model()
+    try:
+        user = User.objects.get(pk=user_id)
+        if not user.email:
+            return
+        subject, text, html = invitation_email(user, plain_password)
+        _send(subject, text, html, user.email)
+    except Exception as exc:
+        raise self.retry(exc=exc)
+
+
+@shared_task(bind=True, max_retries=3, default_retry_delay=60)
 def send_order_confirmation_email(self, order_id: int) -> None:
     from apps.orders.models import Order
     from .emails import order_confirmation_email

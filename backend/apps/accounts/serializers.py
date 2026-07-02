@@ -82,6 +82,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
             "email",
             "phone",
             "role",
+            "is_staff",
             "is_phone_verified",
             "is_email_verified",
             "addresses",

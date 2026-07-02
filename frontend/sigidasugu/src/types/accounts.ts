@@ -6,6 +6,7 @@ export interface User {
   email: string
   phone?: string
   role: string
+  is_staff?: boolean
 }
 
 export interface Address {

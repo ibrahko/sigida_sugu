@@ -121,7 +121,55 @@ def welcome_email(user) -> tuple[str, str, str]:
     return subject, text, html
 
 
-# ── 2. Confirmation de commande ───────────────────────────────────────────────
+# ── 2. Invitation backoffice ──────────────────────────────────────────────────
+
+def invitation_email(user, plain_password: str) -> tuple[str, str, str]:
+    name = user.first_name or user.username
+    role_labels = {"customer": "Client", "staff": "Staff", "admin": "Administrateur"}
+    role_label = role_labels.get(user.role, user.role)
+    login_url = f"{FRONTEND_URL}/connexion"
+
+    subject = f"Ton compte Sigida Sugu a été créé — {role_label}"
+    text = (
+        f"Bonjour {name},\n\n"
+        f"Un compte {role_label} a été créé pour toi sur Sigida Sugu.\n\n"
+        f"Identifiants de connexion :\n"
+        f"  Identifiant : {user.username}\n"
+        f"  Mot de passe : {plain_password}\n\n"
+        f"Connecte-toi ici : {login_url}\n\n"
+        "Pour ta sécurité, change ton mot de passe dès ta première connexion.\n\n"
+        "— L'équipe Sigida Sugu"
+    )
+    html = _base_html(f"""
+        <h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#111;">Bienvenue, {name} 👋</h1>
+        <p style="margin:0 0 20px;color:#555;font-size:15px;line-height:1.6;">
+          Un compte <strong>{role_label}</strong> a été créé pour toi sur Sigida Sugu.
+          Voici tes identifiants de connexion :
+        </p>
+
+        <div style="background:#f5f4f0;border-radius:12px;padding:24px 28px;margin:0 0 24px;">
+          <table cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="font-size:13px;color:#888;padding:6px 0;width:140px;">Identifiant</td>
+              <td style="font-size:15px;font-weight:700;color:#111;padding:6px 0;">{user.username}</td>
+            </tr>
+            <tr>
+              <td style="font-size:13px;color:#888;padding:6px 0;">Mot de passe</td>
+              <td style="font-size:15px;font-weight:700;color:#111;font-family:monospace;padding:6px 0;">{plain_password}</td>
+            </tr>
+          </table>
+        </div>
+
+        <p style="margin:0 0 4px;font-size:13px;color:#888;">
+          ⚠️ Change ton mot de passe dès ta première connexion pour sécuriser ton compte.
+        </p>
+
+        {_btn("Se connecter", login_url)}
+    """, preheader=f"Tes identifiants Sigida Sugu — {role_label}")
+    return subject, text, html
+
+
+# ── 3. Confirmation de commande ───────────────────────────────────────────────
 
 def order_confirmation_email(order) -> tuple[str, str, str]:
     name = order.user.first_name or order.user.username
